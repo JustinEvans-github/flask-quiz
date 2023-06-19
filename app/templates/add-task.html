@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+    <head>
+    </head>
+    <body>
+
+        <!-- book -- description - quiz question -->
+        <p style="width: 600px;">
+            <q>
+                <i style="color:black">
+                    {{ description_answer }}
+                </i>
+            </q>
+        </p>
+
+        <!-- WTForm - quiz question -->
+        <form action="/" method="POST" role="form">
+            {% for question in form %}
+                  <div class="question">
+                    <h2>{{ question.label }}</h2>
+                  </div><br>
+                  <div class = "answer">
+                    {{ question }}
+                  </div>
+            {% endfor %}
+            <input type="submit" value = "Submit" />
+          </form>
+
+    </body>
