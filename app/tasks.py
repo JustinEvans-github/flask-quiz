@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 import random
 
 
-## extract page contents
+# follow url to extract book title and description contents
 def page_content(url):
 
     print(f'Extracting text: {url}')
@@ -19,6 +19,7 @@ def page_content(url):
 
     return title, product_description
 
+# page with books listed
 def book_page(url):
     print(f'Page url: {url}')
     r = request.urlopen(url)

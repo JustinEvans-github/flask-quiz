@@ -1,29 +1,79 @@
 <!doctype html>
 <html>
+
+    <!--  Creating a style guide for the long book description 
+    https://www.w3schools.com/cssref/css3_pr_text-overflow.php -->
+    <style> 
+        div.long_description {
+            white-space: normal; 
+            width: 500px; 
+            height: 100px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            border: 1px solid #c7bfbf;
+            background-color: #d9edf7;
+        }
+        
+        div.long_description:hover {
+            overflow: visible;
+        }
+        </style>
+
     <head>
+
+        <title style="border-bottom: 1px solid #af3c43">
+            Webscrape Quiz
+        </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" media="screen">
     </head>
+
     <body>
 
         <!-- book -- description - quiz question -->
-        <p style="width: 600px;">
-            <q>
-                <i style="color:black">
-                    {{ description_answer }}
-                </i>
-            </q>
-        </p>
+        <div class="long_description">
+            {{ description_answer }}
+        </div>
 
-        <!-- WTForm - quiz question -->
-        <form action="/" method="POST" role="form">
-            {% for question in form %}
-                  <div class="question">
-                    <h2>{{ question.label }}</h2>
-                  </div><br>
-                  <div class = "answer">
-                    {{ question }}
-                  </div>
-            {% endfor %}
-            <input type="submit" value = "Submit" />
-          </form>
+        <!-- -->
+        <form method="POST" action="/">
+            {{ form.csrf_token }}
+            {{ form.name.label }} {{ form.name(size=20) }}
 
+            {% if form.name.errors %}
+                <ul class="errors">
+                    {% for error in form.name.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %} 
+            <input type="submit" value="Go">
+        </form>
+
+        <div class="container">
+            <!-- WTForm - quiz question -->
+
+            
+            <!-- <form action="/" method="POST" role="form">-->
+            <!-- <form action="/" method="POST" role="form">
+                {{ form.crsf_token }}
+                {{ form.name }}
+                
+                {% for question in form %}
+                    <div class="question" style="color:hsl(210,30%,30%)">
+                        <h2>Select the title of the book below:</h2>
+                    </div>
+                    <div class = "answer">
+                        {{ question }}
+                    </div>
+                {% endfor %}
+                <input type="submit" name="submit" value="Submit">
+                    
+            </form>
+            -->
+        </div>
+
+        <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     </body>
+</html>

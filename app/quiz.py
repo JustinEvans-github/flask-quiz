@@ -1,7 +1,9 @@
 from flask_wtf import FlaskForm as Form
 from wtforms import RadioField
-from wtforms.validators import ValidationError
+from wtforms.validators import ValidationError, Optional
 from random import randrange
+from wtforms import StringField
+from wtforms.validators import DataRequired
 
 # source: https://github.com/adityachandavale/flask-wt-forms-example/blob/main/quiz.py
 class CorrectAnswer(object):
@@ -15,9 +17,23 @@ class CorrectAnswer(object):
             raise ValidationError(message)
 
 
+# class PopQuiz(Form):
+#     class Meta:
+#         csrf = False
+
+#     q1 = RadioField('label') # values set in 'views.py'
+
 class PopQuiz(Form):
     class Meta:
         csrf = False
+    name = StringField('name', validators=[DataRequired()])
 
-    question = RadioField() # values set in 'views.py'
+class RadioQuiz(Form):
+
+    q1 = RadioField(
+        "The answer to question one is False.",
+        choices=[('True', 'True'), ('False', 'False')],
+        validators=[CorrectAnswer('False')]
+        )
+    
 
