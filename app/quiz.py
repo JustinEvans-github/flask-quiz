@@ -16,20 +16,14 @@ class CorrectAnswer(object):
         if field.data != self.answer:
             raise ValidationError(message)
 
-
-# class PopQuiz(Form):
-#     class Meta:
-#         csrf = False
-
-#     q1 = RadioField('label') # values set in 'views.py'
-
 class PopQuiz(Form):
     class Meta:
         csrf = False
     name = StringField('name', validators=[DataRequired()])
 
 class RadioQuiz(Form):
-
+    class Meta:
+        csrf = False
     q1 = RadioField(
         "The answer to question one is False.",
         choices=[('True', 'True'), ('False', 'False')],

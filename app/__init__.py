@@ -1,15 +1,13 @@
 from flask import Flask
-import redis
-from rq import Queue
+from flask_bootstrap import Bootstrap
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'your secret key'
 
-#r = redis.Redis()
-#q = Queue(connection=r)
-
+bootstrap = Bootstrap(app)
 
 from app import tasks
-from app import views
+from app import routes
 from app import quiz
 
 

@@ -5,7 +5,11 @@ from app.quiz import *
 from wtforms.validators import InputRequired
 
 
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, flash
+
+@app.route('/base',methods=['GET','POST'])
+def base():
+    return render_template('base.html')
 
 @app.route('/',methods=['GET','POST'])
 def add_task():
@@ -21,33 +25,23 @@ def add_task():
     title_answer = content[0][0]
 
     # define quiz content in WTForm
-    # form = PopQuiz()
-    # form.q1.coerce=bool
-
-    # form.q1.choices = [True,'label']#[(True, title_options[0]), (False, title_options[1]),(False,title_options[2])]
-    
-    # form.q1.validator = [InputRequired()]#[True]#[CorrectAnswer(True)]
-    # form.q1.validate_choice = True
-    # form.q1.default = True
-
-    # from wtforms import RadioField
-    # form.q1 = RadioField(
-    # "The answer to question one is False.",
-    # choices=[('True', 'True'), ('False', 'False')],
-    # validators=[CorrectAnswer('False')]
-    # )
-    
-    form = PopQuiz()
-    #form = RadioQuiz()
+    #form = PopQuiz()
+    form = RadioQuiz()
+    form.q1.choices = [('False', title_options[0]), ('True', title_options[1]),(False,title_options[2])]
+    form.q1.validator = [CorrectAnswer('False')]
 
     if form.is_submitted():
         print ("submitted")
+        print(form.errors)
     if form.validate():
         print("validate")
 
     if form.validate_on_submit():
-        print("validated")
+        print("validated on submit")
         return redirect(url_for('passed'))
+    if not form.validate_on_submit():
+        print("not valid")
+        flash('not valid')
     return render_template('add-task.html', form=form, description_answer=description_answer)
 
     
