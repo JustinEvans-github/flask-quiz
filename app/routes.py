@@ -21,14 +21,19 @@ def add_task():
     # define quiz contents
     content = book_page(url_start)
     title_options = [content[0][0],content[1][0],content[2][0]]
+
+    global description_answer
     description_answer = content[0][1]
     title_answer = content[0][0]
 
     # define quiz content in WTForm
     #form = PopQuiz()
+    global form
     form = RadioQuiz()
     form.q1.choices = [('False', title_options[0]), ('True', title_options[1]),(False,title_options[2])]
     form.q1.validator = [CorrectAnswer('False')]
+
+
 
     if form.is_submitted():
         print ("submitted")
@@ -38,13 +43,12 @@ def add_task():
 
     if form.validate_on_submit():
         print("validated on submit")
+        flash('Thanks for registering')
         return redirect(url_for('passed'))
-    if not form.validate_on_submit():
-        print("not valid")
-        flash('not valid')
     return render_template('add-task.html', form=form, description_answer=description_answer)
 
     
 @app.route('/passed/')
 def passed():
-    return render_template('passed.html')
+    print("switched to success")
+    return render_template('passed.html', form=form, description_answer=description_answer)
