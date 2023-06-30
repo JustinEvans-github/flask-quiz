@@ -7,7 +7,7 @@ from wtforms.validators import InputRequired
 
 from flask import render_template, request, redirect, url_for, flash
 
-@app.route('/base',methods=['GET','POST'])
+@app.route('/',methods=['GET','POST'])
 def base():
     return render_template('base.html')
 
@@ -26,10 +26,10 @@ def webscrape():
     global description_answer
     description_answer = content[0][1]
 
-    return redirect(url_for('add_task'))
+    return redirect(url_for('quiz'))
 
-@app.route('/',methods=['GET','POST'])
-def add_task():
+@app.route('/quiz',methods=['GET','POST'])
+def quiz():
 
     # define quiz content in WTForm
     #form = PopQuiz()
