@@ -1,5 +1,4 @@
 {% extends "bootstrap/base.html" %}
-{% block title %}This is an example page{% endblock %}
 
 {% block navbar %}
 <div class="navbar navbar-fixed-top">
@@ -7,6 +6,15 @@
 </div>
 {% endblock %}
 
+{% block head %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.0/css/bootstrap.min.css" integrity="sha256-/ykJw/wDxMa0AQhHDYfuMEwVb4JHMx9h4jD4XvHqVzU=" crossorigin="anonymous" />
+
+<h1 style="border-bottom: 3px solid #af3c43">
+  FlaskApp
+</h1>
+{% endblock %}
+
+
 {% block content %}
-  <h1>Hello, Bootstrap</h1>
+  <a href="{{ url_for('webscrape') }}">Webscrape Quiz Questions</a>
 {% endblock %}

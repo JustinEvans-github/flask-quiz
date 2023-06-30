@@ -1,5 +1,6 @@
-<!doctype html>
-<html>
+{% extends 'base.html' %}
+
+{% block head %}
     <head>
         <!--  Creating a style guide for the long book description 
         https://www.w3schools.com/cssref/css3_pr_text-overflow.php -->
@@ -19,13 +20,11 @@
             } 
         </style> <!-- change to overflow: visible -->
 
+
     </head>
+{% endblock %}
 
-  
-    <h1 style="border-bottom: 3px solid #af3c43">
-        FlaskApp
-    </h1>
-
+{% block content %}
     <body>
 
         <div class="container">
@@ -57,4 +56,4 @@
         <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
         <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     </body>
-</html>
+{% endblock %}
