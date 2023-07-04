@@ -5,6 +5,8 @@ from app.quiz import *
 from wtforms.validators import InputRequired
 
 
+from nltk.tokenize import sent_tokenize
+
 from flask import render_template, request, redirect, url_for, flash
 
 @app.route('/',methods=['GET','POST'])
@@ -23,8 +25,11 @@ def webscrape():
     title_options = [content[0][0],content[1][0],content[2][0]]
     print(f'Answer: {content[0][0]}')
 
+    description_answer_all = content[0][1]
+
+    # extract first three sentences
     global description_answer
-    description_answer = content[0][1]
+    description_answer = ' '.join(sent_tokenize(description_answer_all)[0:2])
 
     return redirect(url_for('quiz'))
 
@@ -46,8 +51,8 @@ def quiz():
 
     if form.validate_on_submit():
         print("validated on submit")
-        return redirect(url_for('passed'))
-    return render_template('add-task.html', form=form, description_answer=description_answer)
+        return redirect(url_for('quiz'))
+    return render_template('quiz.html', form=form, description_answer=description_answer)
 
     
 @app.route('/passed/')

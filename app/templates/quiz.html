@@ -1,23 +1,45 @@
 {% extends 'base.html' %}
 
 {% block head %}
+    {{ super() }} <!-- super allows extension of block content-->
     <head>
         <!--  Creating a style guide for the long book description 
         https://www.w3schools.com/cssref/css3_pr_text-overflow.php -->
         <style> 
-            div.long_description {
-                white-space: normal; 
-                width: 500px; 
-                height: 100px;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                border: 1px solid #c7bfbf;
-                background-color: #d9edf7;
+      
+            /* Book title quote */ 
+            blockquote {
+                font-family: Lato,sans-serif;
+                background: #f9f9f9;
+                border-left: 10px solid #ccc;
+                margin: 1.5em 10px;
+                padding: 0.5em 10px;
+                quotes: "\201C""\201D""\2018""\2019";
+                }
+            blockquote:before {
+                color: #ccc;
+                content: open-quote;
+                font-size: 4em;
+                line-height: 0.1em;
+                margin-right: 0.25em;
+                vertical-align: -0.4em;
+                }
+
+            blockquote:after {
+            color: #ccc;
+            content: close-quote;
+            font-size: 4em;
+            line-height: 0.1em;
+            margin-right: 0.25em;
+            vertical-align: -0.5em;
             }
-            
-            div.long_description:hover {
-                overflow: scroll; 
-            } 
+            blockquote > p {
+                display: inline;
+                }
+            blockquote > a {
+                display: outside;
+                }
+
         </style> <!-- change to overflow: visible -->
 
 
@@ -25,35 +47,37 @@
 {% endblock %}
 
 {% block content %}
-    <body>
+    {{ super() }}
 
-        <div class="container">
-            <!-- WTForm - quiz question -->
+<main class="container">
 
-            <!-- <form action="/" method="POST" role="form">-->
-            <form action="/" method="POST" role="form">
-                {{ form.crsf_token }}
-                {{ form.name }}
+    <!-- Book Description -->
+    <blockquote>
+        <p>
+        {{ description_answer }}... 
+        <p>
+        <a href="https://example.com">Source</a>
+    </blockquote >
 
-                {% for question in form %}
-                    <div class="question" style="color:hsl(210,30%,30%)">
-                        <h2>Select the title of the book below:</h2>
-                    </div>
-                    <div class = "answer">
-                        {{ question }}
-                    </div>
+    <!-- WTForm - quiz question -->
+    <form action="/quiz" method="POST" role="form">
+        {{ form.crsf_token }}
+        {{ form.name }}
 
-                {% endfor %}
-                <input type="submit" value="Submit">      
-            </form>
-        </div>
+        {% for question in form %}
+            <div class="question" style="font-size: 20px;">
+                <h3>Select the title of the book below</h3>
+            </div>
+            <div class = "answer" style="font-size: 20px;">
+                {{ question }}
+            </div>
 
-        <!-- book -- description - quiz question -->
-        <div class="long_description">
-            {{ description_answer }}
-        </div>
+        {% endfor %}
+        <input type="submit" value="Submit" style="font-size: 20px;">      
+    </form>
 
-        <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-        <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-    </body>
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
+</main>
 {% endblock %}

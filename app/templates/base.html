@@ -1,20 +1,170 @@
 {% extends "bootstrap/base.html" %}
 
-{% block navbar %}
-<div class="navbar navbar-fixed-top">
-  <!-- ... -->
-</div>
+{% block head %}
+<style>
+  #nav-bar-canada {
+    max-width: 30%;
+    height: 50px;
+    float: left;
+    align-self: center;
+    padding-top: 10px;
+  }
+
+  #nav-bar-search {
+    max-width: 150px;
+    height: 44px;
+    align-self: center;
+    float: right;
+    padding-top: 10px;
+  }
+  
+  #nav-bar-text {
+    max-height: 30%;
+    text-align: center;
+    padding-top: 20px;
+    ;
+  }
+
+  .btn-default {
+    display: table;
+    width: 100%;
+    height: 40px;
+
+    font-family: Helvetica,Arial,sans-serif;
+    font-size: x-large;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+
+    padding-top: 10px;
+    color: white;
+    background: #336b95;
+    border: #26374a;
+    text-decoration: None;
+  }
+
+.btn-group-justified {
+
+    display: table;
+    max-width: 80%;
+    table-layout: fixed;
+    border-collapse: separate;
+}
+
+#btn_group_wrapper {
+  text-align: center;
+  align-items: center;
+  font-family: Lato,sans-serif;
+  
+  border-radius: 3px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: minmax(50px, auto);
+  color: #26374a;
+  border: 1px solid;
+  border-color:  hsl(210,30%,30%);
+  background-color: #eaebed;
+}
+
+#btn_group_wrapper>div:first-of-type  {background-color: #eaebed}
+#btn_group_wrapper>div:nth-of-type(2) {background-color: #eaebed}
+#btn_group_wrapper>div:nth-of-type(3) {background-color: #eaebed}
+
+.flex-container {
+  display: flex;
+  height: 50px;
+  justify-content: center;
+  background-color: #26374a;
+}
+
+.flex-container > div {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  border-left: 1px solid #eaebed;
+  width: 120px;
+  color:#eaebed;
+  line-height: 50px;
+  font-size: 16px;
+  font-family: "Noto Sans",sans-serif;
+}
+
+.container {
+    padding-right: 100px;
+    padding-left: 100px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+
+</style>
+
 {% endblock %}
 
-{% block head %}
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.0/css/bootstrap.min.css" integrity="sha256-/ykJw/wDxMa0AQhHDYfuMEwVb4JHMx9h4jD4XvHqVzU=" crossorigin="anonymous" />
+{% block navbar %}
+<body >
+  <div class="container">
+    <div class="nav-bar">
+      <div>
+        <img id="nav-bar-canada" src= "{{ url_for('static',filename='canada.png') }}">
+        <img id="nav-bar-search" src="{{ url_for('static',filename='nav-bar-search.png') }}">
+        <h1 id="nav-bar-text">Generate a book quiz from webscraping</h1>
+      </div>
+    </div>
+  </div>
 
-<h1 style="border-bottom: 3px solid #af3c43">
-  FlaskApp
-</h1>
+  <div>
+    <div class="flex-container">
+      <div style="border-left-color: hsl(210,30%,30%);"></div>
+      <div>Flask</div>
+      <div>CSS</div>
+      <div>HTML</div>  
+      <div>Python</div>   
+      <div>BeautifulSoup</div>  
+      <div>NLTK</div> 
+      <div></div> 
+    </div>
+
+  </div>
+
+</body>
+
+
 {% endblock %}
 
 
 {% block content %}
-  <a href="{{ url_for('webscrape') }}">Webscrape Quiz Questions</a>
+
+<!-- Instructions -->
+<main class="container">
+
+  <h1 style="border-bottom: 3px solid #af3c43;">
+    Instructions
+  </h1>
+  <p style="font-size: 20px;">
+    Can you guess the tite of a book based on the first three sentences of it's summary?
+    Click on the links below to randomly generate a quiz.
+  </p>
+
+  <!-- Quiz Button -->
+  <div style="height: 60px">
+    <a class="btn-default" href="{{ url_for('webscrape') }}">
+      Random
+    </a>
+  </div>
+
+  <!--Quiz Themes -->
+  <div id="btn_group_wrapper">
+    <div id="c1" style="border-color:  hsl(210,30%,30%)">Mystery</div>
+    <div id="c2">Science Fiction</div>
+    <div id="c3">History</div>
+  </div>
+  <div id="btn_group_wrapper">
+    <div id="c1">Classics</div>
+    <div id="c2">Fantasy</div>
+    <div id="c3">Biography</div>
+  </div>
+
+</main>
 {% endblock %}
