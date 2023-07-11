@@ -37,7 +37,6 @@ def webscrape():
 def quiz():
 
     # define quiz content in WTForm
-    #form = PopQuiz()
     form = RadioQuiz()
     form.q1.choices = [('False', title_options[0]), ('True', title_options[1]),(False,title_options[2])]
     form.q1.validator = [CorrectAnswer('False')]
@@ -50,12 +49,29 @@ def quiz():
         print(f'form.data {form.data}')
 
     if form.validate_on_submit():
-        print("validated on submit")
-        return redirect(url_for('quiz'))
+        return redirect(url_for('passed'))
+    
+    if request.method == 'POST' and not form.validate_on_submit():
+        return redirect(url_for('failed'))
     return render_template('quiz.html', form=form, description_answer=description_answer)
 
-    
+# TODO: cleanup unncessary duplication w/ form inputs    
 @app.route('/passed/')
 def passed():
-    flash('Correct Answer')
+    # define quiz content in WTForm
+    form = RadioQuiz()
+    form.q1.choices = [('False', title_options[0]), ('True', title_options[1]),(False,title_options[2])]
+    form.q1.validator = [CorrectAnswer('False')]
+
+    flash('Correct Answer!')
+    return render_template('passed.html', form=form, description_answer=description_answer)
+
+@app.route('/failed/')
+def failed():
+    # define quiz content in WTForm
+    form = RadioQuiz()
+    form.q1.choices = [('False', title_options[0]), ('True', title_options[1]),(False,title_options[2])]
+    form.q1.validator = [CorrectAnswer('False')]
+
+    flash('Wrong title. Try again!')
     return render_template('passed.html', form=form, description_answer=description_answer)

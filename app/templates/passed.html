@@ -1,13 +1,33 @@
-{% extends "add-task.html" %}
+{% extends 'quiz.html' %}
 
-{% block body %}
-{% with messages = get_flashed_messages() %}
+{% block head %}
+    {{ super() }}
+    <head>
+        <style>
+          .flash{
+            color:rgb(37, 153, 26);
+            font-size: 20px;
+            font-family: Lato,sans-serif;
+          }
+        </style>
+    </head>
+{% endblock %}
+
+
+{% block content %}
+{{ super() }}
+
+<main class="container">
+  <br>
+  {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
-      <ul class=flashes>
-      {% for message in messages %}
-        <li>{{ message }}</li>
+      {% for category, message in messages %}
+        <div class="flash">
+          {{ message }}
+        </div>
       {% endfor %}
-      </ul>
     {% endif %}
-{% endwith %}
+  {% endwith %}
+</main>
+
 {% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'quiz.html' %}
+
+
+{% block head %}
+    {{ super() }}
+    <head>
+        <style>
+          .flashes{
+            color:rgb(37, 153, 26)
+          }
+        </style>
+    </head>
+    {% endblock %}
+
+
+{% block content %}
+{{ super() }}
+
+<main class="container">
+  <br>
+  {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul class=flashes>
+        {% for message in messages %}
+          <li>{{ message}}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+  {% endwith %}
+</main>
+{% endblock %}
