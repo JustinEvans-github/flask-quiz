@@ -1,6 +1,6 @@
 # Webscraped Quiz in Flask
 
-A quiz app where users guess the tite of a book based on the first three sentences of it's summary?
+A quiz app where users guess the tite of a book based on the first three sentences of it's summary.
 
 ### Components
 - Webscaped [quiz contents](/https://books.toscrape.com/) using [Beautiful Soup](/https://www.crummy.com/software/BeautifulSoup/bs4/doc/)
