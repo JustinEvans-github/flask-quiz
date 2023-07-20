@@ -27,6 +27,11 @@ def webscrape():
 
     description_answer_all = content[0][1]
 
+    global url_answer
+    url_answer = content[0][2]
+
+    # TODO: randomize quiz
+
     # extract first three sentences
     global description_answer
     description_answer = ' '.join(sent_tokenize(description_answer_all)[0:2])
@@ -38,7 +43,7 @@ def quiz():
 
     # define quiz content in WTForm
     form = RadioQuiz()
-    form.q1.choices = [('False', title_options[0]), ('True', title_options[1]),(False,title_options[2])]
+    form.q1.choices = [('False', title_options[0]), ('True', title_options[1]),('True',title_options[2])]
     form.q1.validator = [CorrectAnswer('False')]
 
     if form.is_submitted():
@@ -53,25 +58,25 @@ def quiz():
     
     if request.method == 'POST' and not form.validate_on_submit():
         return redirect(url_for('failed'))
-    return render_template('quiz.html', form=form, description_answer=description_answer)
+    return render_template('quiz.html', form=form, description_answer=description_answer, url_answer=url_answer)
 
-# TODO: cleanup unncessary duplication w/ form inputs    
+# TODO: cleanup unnecessary duplication w/ form inputs    
 @app.route('/passed/')
 def passed():
     # define quiz content in WTForm
     form = RadioQuiz()
-    form.q1.choices = [('False', title_options[0]), ('True', title_options[1]),(False,title_options[2])]
+    form.q1.choices = [('False', title_options[0]), ('True', title_options[1]),('True',title_options[2])]
     form.q1.validator = [CorrectAnswer('False')]
 
     flash('Correct Answer!')
-    return render_template('passed.html', form=form, description_answer=description_answer)
+    return render_template('passed.html', form=form, description_answer=description_answer, url_answer=url_answer)
 
 @app.route('/failed/')
 def failed():
     # define quiz content in WTForm
     form = RadioQuiz()
-    form.q1.choices = [('False', title_options[0]), ('True', title_options[1]),(False,title_options[2])]
+    form.q1.choices = [('False', title_options[0]), ('True', title_options[1]),('True',title_options[2])]
     form.q1.validator = [CorrectAnswer('False')]
 
     flash('Wrong title. Try again!')
-    return render_template('passed.html', form=form, description_answer=description_answer)
+    return render_template('failed.html', form=form, description_answer=description_answer, url_answer=url_answer)

@@ -17,7 +17,7 @@ def page_content(url):
     # preprocess title
     title = title.strip().replace(' | Books to Scrape - Sandbox','')
 
-    return title, product_description
+    return title, product_description, url
 
 # page with books listed
 def book_page(url):
@@ -42,6 +42,7 @@ def book_page(url):
     for url_return in selected_urls:
         content = page_content(url_return)
         extracted_content.append(content)
+        print(content)
 
     return extracted_content
 

@@ -1,16 +1,17 @@
 {% extends 'quiz.html' %}
 
-
 {% block head %}
     {{ super() }}
     <head>
         <style>
-          .flashes{
-            color:rgb(37, 153, 26)
+          .flash{
+            color:rgb(169, 5, 5);
+            font-size: 20px;
+            font-family: Lato,sans-serif;
           }
         </style>
     </head>
-    {% endblock %}
+{% endblock %}
 
 
 {% block content %}
@@ -18,14 +19,15 @@
 
 <main class="container">
   <br>
-  {% with messages = get_flashed_messages() %}
-      {% if messages %}
-        <ul class=flashes>
-        {% for message in messages %}
-          <li>{{ message}}</li>
-        {% endfor %}
-        </ul>
-      {% endif %}
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="flash">
+          {{ message }}
+        </div>
+      {% endfor %}
+    {% endif %}
   {% endwith %}
 </main>
+
 {% endblock %}
