@@ -21,20 +21,24 @@ def webscrape():
 
     # define quiz contents
     content = book_page(url_start)
+
+    # randomize quiz and re-find 'false' flag
     global title_options
-    title_options = [content[0][0],content[1][0],content[2][0]]
-    print(f'Answer: {content[0][0]}')
+    title_options = [('True',content[0][0]),('True',content[1][0]),('False',content[2][0])]
+    random.shuffle(title_options)
 
-    description_answer_all = content[0][1]
-
+    title_answer = [x for x in title_options if "False" in x][0][1]
+    description_answer_all = [x for x in content if title_answer in x][0][1]
+    
     global url_answer
-    url_answer = content[0][2]
-
-    # TODO: randomize quiz
-
+    url_answer = [x for x in content if title_answer in x][0][2]
+    
     # extract first three sentences
     global description_answer
     description_answer = ' '.join(sent_tokenize(description_answer_all)[0:2])
+
+    print(f'Title Answer: {title_answer}')
+    print(f'Description Answer: {description_answer}')
 
     return redirect(url_for('quiz'))
 
@@ -43,7 +47,7 @@ def quiz():
 
     # define quiz content in WTForm
     form = RadioQuiz()
-    form.q1.choices = [('False', title_options[0]), ('True', title_options[1]),('True',title_options[2])]
+    form.q1.choices = title_options
     form.q1.validator = [CorrectAnswer('False')]
 
     if form.is_submitted():
@@ -65,7 +69,7 @@ def quiz():
 def passed():
     # define quiz content in WTForm
     form = RadioQuiz()
-    form.q1.choices = [('False', title_options[0]), ('True', title_options[1]),('True',title_options[2])]
+    form.q1.choices = title_options
     form.q1.validator = [CorrectAnswer('False')]
 
     flash('Correct Answer!')
@@ -75,7 +79,7 @@ def passed():
 def failed():
     # define quiz content in WTForm
     form = RadioQuiz()
-    form.q1.choices = [('False', title_options[0]), ('True', title_options[1]),('True',title_options[2])]
+    form.q1.choices = title_options
     form.q1.validator = [CorrectAnswer('False')]
 
     flash('Wrong title. Try again!')
